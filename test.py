@@ -1,5 +1,11 @@
 import base64
 from datetime import datetime
+
+import sys
+
+from ripe.atlas.sagan import DnsResult
+
+from helpers import findAsn, on_result_response
 from ripe.atlas.cousteau import (
     Ping,
     Dns,
@@ -7,12 +13,11 @@ from ripe.atlas.cousteau import (
     AtlasCreateRequest,
     AtlasStream, AtlasResultsRequest)
 import dns.message
+import constants
 
-dns = Dns(query_class='IN', query_type='TXT', query_argument='google.com',
-          description='Pepe', af='4', protocol='UDP', is_oneoff=True, target='8.8.8.8')
-
-dns = Dns(query_class='IN', query_type='A', query_argument='google.com',
-          description='Pepe', af='4', protocol='UDP', is_oneoff=True, target='8.8.8.8')
+dns = Dns(query_class='IN', query_type='TXT', query_argument=constants.QUERY,
+          description='Pepe', af='4', protocol='UDP', is_oneoff=True, resolve_on_probe=False, target='8.8.8.8',
+          include_qbuf=True, set_rd_bit=True)
 
 source = AtlasSource(type="area", value="WW", requested=1)
 
@@ -25,25 +30,40 @@ atlas_request = AtlasCreateRequest(
     sources=[source],
     is_oneoff=True
 )
+msm_id = None
+create = True
+if create:
+    (is_success, response) = atlas_request.create()
+    msm_id = response['measurements'].pop()
+else:
+    msm_id = 8310485
+print "starting stream"
 
-#(is_success, response) = atlas_request.create()
-#print response
+if create:
+    print msm_id
+    atlas_stream = AtlasStream()
+    atlas_stream.connect()
+    # Measurement results
+    stream_type = "result"
+    # Bind function we want to run with every result message received
+    atlas_stream.bind_stream(stream_type, on_result_response)
+    # Subscribe to new stream for 1001 measurement results
+    stream_parameters = {"msm": msm_id}
+    atlas_stream.start_stream(stream_type=stream_type, **stream_parameters)
+    atlas_stream.timeout(seconds=100)
+    print "timeout"
+else:
+    kwargs = {
+        "msm_id": msm_id,
+    }
+    is_success, results = AtlasResultsRequest(**kwargs).create()
 
-kwargs = {
-    "msm_id": 8310265,
-}
+    a = DnsResult(results.pop())
+    b = a.responses
+    for n in b:
+        #print dns.message.from_wire(base64.b64decode(n.abuf))
+        on_result_response(n.abuf.answers.pop())
 
-is_success, results = AtlasResultsRequest(**kwargs).create()
+#TODO: check that the response is the one expected
 
-for r in results:
-    print r
 
-from ripe.atlas.sagan import DnsResult
-from ripe.atlas.sagan.dns import Response, Message
-import base64
-import dns.message
-a = DnsResult(r)
-b = a.responses
-for n in b:
-    #print dns.message.from_wire(base64.b64decode(n.abuf))
-    print n.abuf.answers
