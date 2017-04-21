@@ -43,5 +43,7 @@ class CensorshipResults(models.Model):
     censored = fields.UInt8Field()
     date = fields.DateField()
     ts = fields.DateTimeField()
+    cl_loc = fields.StringField()
+    ns_loc = fields.StringField()
 
     engine = engines.MergeTree('date', ('domain', 'hostname'))
