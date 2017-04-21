@@ -42,5 +42,6 @@ class CensorshipResults(models.Model):
     ns_ip = fields.StringField()
     censored = fields.UInt8Field()
     date = fields.DateField()
+    ts = fields.DateTimeField()
 
     engine = engines.MergeTree('date', ('domain', 'hostname'))
