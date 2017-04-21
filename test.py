@@ -23,8 +23,8 @@ values = None
 with open('ids.txt') as f:
     values = f.read().splitlines()
 
-source = AtlasSource(type="probes", value=','.join(values), requested=len(values))
-#source = AtlasSource(type="area", value='WW', requested=10000)
+#source = AtlasSource(type="probes", value=','.join(values), requested=len(values))
+source = AtlasSource(type="area", value='WW', requested=10000)
 
 ATLAS_API_KEY = "bcbc59fb-c370-4999-bc1c-fa9fe0a9d3a9"
 
