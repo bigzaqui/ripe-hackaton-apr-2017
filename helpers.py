@@ -17,6 +17,7 @@ def on_result_response(*args):
     """
     print "got response"
     ip = None
+    print args[0]
     with open('/usr/local/etc/namedb/log/querylog') as f:
         for line in f:
             if constants.QUERY in line:
