@@ -18,9 +18,9 @@ def on_result_response(*args):
     print "got response"
     print args[0]
     ip = None
-    ans = args[0]['result']['answers']
-    if ans:
-        hostname = ans.pop()['NAME']
+    ans = args[0]['result']
+    if 'answers' in ans:
+        hostname = ans['answers'].pop()['NAME']
         exittext = "{} -> ".format(hostname)
         with open('/usr/local/etc/namedb/log/querylog') as f:
             for line in f:
