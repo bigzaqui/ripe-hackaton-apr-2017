@@ -17,9 +17,9 @@ import constants
 
 dns = Dns(query_class='IN', query_type='TXT', query_argument=constants.QUERY,
           description='Pepe', af='4', protocol='UDP', is_oneoff=True, resolve_on_probe=False, target='8.8.8.8',
-          include_qbuf=True, set_rd_bit=True)
+          include_qbuf=True, set_rd_bit=True,prepend_probe_id=True)
 
-source = AtlasSource(type="area", value="WW", requested=1)
+source = AtlasSource(type="probes", value="366", requested=1)
 
 ATLAS_API_KEY = "bcbc59fb-c370-4999-bc1c-fa9fe0a9d3a9"
 
@@ -34,6 +34,7 @@ msm_id = None
 create = True
 if create:
     (is_success, response) = atlas_request.create()
+    print response
     msm_id = response['measurements'].pop()
 else:
     msm_id = 8310485
@@ -61,9 +62,7 @@ else:
     a = DnsResult(results.pop())
     b = a.responses
     for n in b:
-        #print dns.message.from_wire(base64.b64decode(n.abuf))
+        # print dns.message.from_wire(base64.b64decode(n.abuf))
         on_result_response(n.abuf.answers.pop())
 
-#TODO: check that the response is the one expected
-
-
+# TODO: check that the response is the one expected
