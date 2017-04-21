@@ -36,7 +36,7 @@ def on_result_response(*args):
                     if hostname in line:
                         counter +=1
                         ip = line.split(' ')[6].split('#')[0]
-                        if findAsn(ip) != '36692':
+                        if findAsn(ip) != '15169':
                             allgoogle = False
                             break
                 exittext += "google!" if allgoogle else ":("
