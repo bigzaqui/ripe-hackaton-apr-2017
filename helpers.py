@@ -10,11 +10,17 @@ def findAsn(ip):
             lookup = str(reverse).replace('in-addr.arpa','origin.asn.cymru.com') 
         else:
             lookup = str(reverse).replace('ip6.arpa','origin6.asn.cymru.com') 
-        return str(dns.resolver.query(lookup, 'TXT')[0]).split(' ')[0].replace('"','')
+        return str(dns.resolver.query(lookup, 'TXT')[0]).split(' ')[0].replace('"','').strip()
     except: 
         # failed to lookup as-number
         return False
 
+def findAsnName(asn):
+    try:
+        return str(dns.resolver.query("AS{0}.asn.cymru.com".format(asn) , 'TXT')[0]).split('|')[4].replace('"','').replace(",","").strip()
+    except: 
+        # failed to lookup as-number
+        return False
 
 def on_result_response(*args):
     """
