@@ -52,7 +52,7 @@ if create:
     # Subscribe to new stream for 1001 measurement results
     stream_parameters = {"msm": msm_id}
     atlas_stream.start_stream(stream_type=stream_type, **stream_parameters)
-    atlas_stream.timeout(seconds=100)
+    atlas_stream.timeout(seconds=150)
     print "timeout"
 else:
     kwargs = {
