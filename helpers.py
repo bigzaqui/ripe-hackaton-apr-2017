@@ -19,7 +19,6 @@ def on_result_response(*args):
     ip = None
     with open('/usr/local/etc/namedb/log/querylog') as f:
         for line in f:
-            print line
             if constants.QUERY in line:
                 ip = line.split(' ')[6].split('#')[0]
     if findAsn(ip) == '15169':
