@@ -21,7 +21,7 @@ def on_result_response(*args):
     exittext = "{} -> ".format(hostname)
     with open('/usr/local/etc/namedb/log/querylog') as f:
         for line in f:
-            if constants.QUERY in line:
+            if hostname in line:
                 ip = line.split(' ')[6].split('#')[0]
     if findAsn(ip) == '15169':
         exittext += 'google!'
