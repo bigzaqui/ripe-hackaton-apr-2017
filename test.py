@@ -19,7 +19,7 @@ dns = Dns(query_class='IN', query_type='TXT', query_argument=constants.QUERY,
           description='Pepe', af='4', protocol='UDP', is_oneoff=True, resolve_on_probe=False, target='8.8.8.8',
           include_qbuf=True, set_rd_bit=True,prepend_probe_id=True)
 
-source = AtlasSource(type="probes", value="366", requested=1)
+source = AtlasSource(type="probes", value="366,516", requested=2)
 
 ATLAS_API_KEY = "bcbc59fb-c370-4999-bc1c-fa9fe0a9d3a9"
 

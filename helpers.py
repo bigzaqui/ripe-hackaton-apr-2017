@@ -17,7 +17,6 @@ def on_result_response(*args):
     """
     print "got response"
     ip = None
-    print args[0]
     hostname = args[0]['result']['answers'].pop()['NAME']
     exittext = "{} -> ".format(hostname)
     with open('/usr/local/etc/namedb/log/querylog') as f:
