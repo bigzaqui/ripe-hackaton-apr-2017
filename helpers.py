@@ -18,11 +18,14 @@ def on_result_response(*args):
     print "got response"
     ip = None
     print args[0]
+    hostname = args[0]['result']['answers']['NAME']
+    exittext = "{} -> ".format(hostname)
     with open('/usr/local/etc/namedb/log/querylog') as f:
         for line in f:
             if constants.QUERY in line:
                 ip = line.split(' ')[6].split('#')[0]
     if findAsn(ip) == '15169':
-        print 'google!'
+        exittext += 'google!'
     else:
-        print ':('
+        exittext += ':('
+    print exittext
