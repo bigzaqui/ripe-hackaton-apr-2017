@@ -38,14 +38,11 @@ msm_id = None
 create = True
 if create:
     (is_success, response) = atlas_request.create()
-    print response
     msm_id = response['measurements'].pop()
 else:
     msm_id = 8310485
-print "starting stream"
 
 if create:
-    print msm_id
     atlas_stream = AtlasStream()
     atlas_stream.connect()
     # Measurement results

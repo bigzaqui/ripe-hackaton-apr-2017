@@ -15,7 +15,6 @@ def on_result_response(*args):
     Function that will be called every time we receive a new result.
     Args is a tuple, so you should use args[0] to access the real message.
     """
-    print "got response"
     ip = None
     ans = args[0]['result']
     if 'answers' in ans:
