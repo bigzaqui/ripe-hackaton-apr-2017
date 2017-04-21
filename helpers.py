@@ -16,7 +16,6 @@ def on_result_response(*args):
     Args is a tuple, so you should use args[0] to access the real message.
     """
     print "got response"
-    print args[0]
     ip = None
     ans = args[0]['result']
     if 'answers' in ans:
