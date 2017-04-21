@@ -22,13 +22,14 @@ def on_result_response(*args):
         hostname = ans['answers'].pop()['NAME']
         exittext = "{} -> ".format(hostname)
         with open('/usr/local/etc/namedb/log/querylog') as f:
+            allgoogle = True
             for line in f:
                 if hostname in line:
                     ip = line.split(' ')[6].split('#')[0]
-        if findAsn(ip) == '15169':
-            exittext += 'google!'
-        else:
-            exittext += ':('
-        print exittext
+                    if findAsn(ip) != '15169':
+                        allgoogle = False
+                        break
+            exittext += "google!" if allgoogle else ":("
+            print exittext
     else:
         print "{}, no answer".format(args[0]['prb_id'])
