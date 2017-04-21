@@ -1,17 +1,20 @@
 import requests
 import constants
+import dns.reversename
+import dns.resolver
 
 def findAsn(ip):
     try:
-        r = requests.get("https://stat.ripe.net/data/network-info/data.json?resource=%s" % ip)
-        result = r.json()
-        if result:
-            return result['data']['asns'][0]
+        reverse = dns.reversename.from_address(ip)
+        if 'in-addr' in reverse:
+            lookup = str(reverse).replace('in-addr.arpa','origin.asn.cymru.com') 
         else:
-            return False
-    except:
+            lookup = str(reverse).replace('ip6.arpa','origin6.asn.cymru.com') 
+        return str(dns.resolver.query(lookup, 'TXT')[0]).split(' ')[0].replace('"','')
+    except: 
         # failed to lookup as-number
         return False
+
 
 def on_result_response(*args):
     """
