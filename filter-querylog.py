@@ -7,10 +7,10 @@ with open('/usr/local/etc/namedb/log/querylog' , 'r')  as f:
   for line in f:
     if sys.argv[1] in line:
       request_from = line.split(' ')[6].split('#')[0] 
-      probe_idi = line.split(' ')[7].split('.')[0].replace('(','')
+      probe_id = line.split(' ')[7].split('.')[0].replace('(','')
       timestamp = line.split(' ')[7].split('.')[1] 
       asn = findAsn(request_from) 
-      if asn == sys.argv[1]:
+      if asn == sys.argv[2]:
          result = ':)'
       else:
          result = ':('
