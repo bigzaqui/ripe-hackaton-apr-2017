@@ -16,12 +16,12 @@ def on_result_response(*args):
     Args is a tuple, so you should use args[0] to access the real message.
     """
     print "got response"
+    print args[0]
     ip = None
-    ans = args[0]['result']
+    ans = args[0]['result']['answers']
     if ans:
-        hostname = ans['answers'].pop()['NAME']
+        hostname = ans.pop()['NAME']
         exittext = "{} -> ".format(hostname)
-        print args[0]
         with open('/usr/local/etc/namedb/log/querylog') as f:
             for line in f:
                 if hostname in line:
