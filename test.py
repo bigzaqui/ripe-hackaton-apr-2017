@@ -25,7 +25,7 @@ with open('ids.txt') as f:
 
 source = AtlasSource(type="probes", value=','.join(values), requested=len(values))
 
-ATLAS_API_KEY = "bcbc59fb-c370-4999-bc1c-fa9fe0a9d3a9"
+ATLAS_API_KEY = ""
 
 atlas_request = AtlasCreateRequest(
     start_time=datetime.utcnow(),
