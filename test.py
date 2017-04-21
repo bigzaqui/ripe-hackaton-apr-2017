@@ -23,7 +23,8 @@ values = None
 with open('ids.txt') as f:
     values = f.read().splitlines()
 
-source = AtlasSource(type="probes", value=','.join(values), requested=len(values))
+#source = AtlasSource(type="probes", value=','.join(values), requested=len(values))
+source = AtlasSource(type="area", value='WW', requested=10000)
 
 ATLAS_API_KEY = "bcbc59fb-c370-4999-bc1c-fa9fe0a9d3a9"
 
@@ -52,7 +53,7 @@ if create:
     # Subscribe to new stream for 1001 measurement results
     stream_parameters = {"msm": msm_id}
     atlas_stream.start_stream(stream_type=stream_type, **stream_parameters)
-    atlas_stream.timeout(seconds=150)
+    atlas_stream.timeout(seconds=300)
     print "timeout"
 else:
     kwargs = {

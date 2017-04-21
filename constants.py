@@ -1,1 +1,1 @@
-QUERY='hola.youcantblockthis.darkfiberiru.net'
+QUERY='all1.youcantblockthis.darkfiberiru.net'
