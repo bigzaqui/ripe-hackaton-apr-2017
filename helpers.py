@@ -5,7 +5,10 @@ def findAsn(ip):
     try:
         r = requests.get("https://stat.ripe.net/data/network-info/data.json?resource=%s" % ip)
         result = r.json()
-        return result['data']['asns'][0]
+        if result:
+            return result['data']['asns'][0]
+        else:
+            return False
     except:
         # failed to lookup as-number
         return False
